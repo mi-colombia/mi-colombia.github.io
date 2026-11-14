@@ -62,8 +62,11 @@
   }
   function lessonView() {
     var s = MC.sess.s, l = s.l, pal = MC.PALIERS[s.pi];
-    var html = '<span class="kicker">Leçon · Palier ' + (s.pi + 1) + ' ' + esc(pal.name) + ' · séance ' + (s.si + 1) + '</span>' +
-      '<h1 class="lesson-title">' + esc(s.t) + '</h1><p class="intro">' + esc(l.intro) + '</p>' +
+    var first = l.ex[0];
+    var html = '<span class="kicker">Leçon ' + (s.si + 1) + ' sur 14 · ' + esc(pal.name) + '</span>' +
+      '<h1 class="lesson-title">' + esc(s.t) + '</h1>' +
+      '<div class="lesson-art"><img src="images/girl.webp" alt=""><button class="bub" data-say="' + esc(first[0]) + '">' + esc(first[0]) + '<small>' + esc(first[1]) + ' · touche pour écouter</small></button></div>' +
+      '<p class="intro">' + esc(l.intro) + '</p>' +
       '<div class="card col" style="gap:4px">' + l.ex.map(function (e) {
         return '<div class="ex"><button class="icon-btn" data-say="' + esc(e[0]) + '" aria-label="Écouter">' + I('speaker', 's') + '</button>' +
           '<div class="col" style="gap:2px"><span class="es">' + esc(e[0]) + '</span><span class="fr">' + esc(e[1]) + '</span></div></div>';
@@ -304,7 +307,7 @@
     html += '<div class="foot"><div class="answer-panel">';
     if (!MC.canListen) html += '<span class="sub" style="font-size:13px">Le micro n’est pas disponible sur ce navigateur : choisis ta réponse (Chrome sur Android pour parler).</span>';
     if (showSugg) {
-      html += '<span class="label">À toi · dis une de ces réponses</span>' + t[2].map(function (o, i) {
+      html += '<span class="label" style="text-align:center">Écoute, réponds à voix haute ou choisis :</span>' + t[2].map(function (o, i) {
         return '<div class="sugg"><button class="txt" data-act="pick-opt" data-i="' + i + '">' + esc(MC.withName(o[0])) + '</button>' +
           '<button class="icon-btn sm" data-say="' + esc(o[0]) + '" aria-label="Écouter cette réponse" style="background:#fff">' + I('speaker', 's') + '</button></div>';
       }).join('') + (D.help ? '' : '<span class="sub" style="font-size:12px">Toucher une réponse la choisit sans passer par l’oral.</span>');
@@ -315,7 +318,9 @@
     if (MC.canListen) {
       html += '<div class="between">' +
         (showSugg ? '<span style="width:96px"></span>' : '<button class="btn ghost sm" data-act="show-help" style="width:96px">Aide</button>') +
+        '<div class="mic-wrap"><span class="waves" aria-hidden="true"><i></i><i></i><i></i></span>' +
         '<button class="mic ' + (D.listening ? 'listening' : '') + '" data-act="mic" aria-label="' + (D.listening ? 'J’écoute…' : 'Appuie pour parler') + '">' + I('mic') + '</button>' +
+        '<span class="waves" aria-hidden="true"><i></i><i></i><i></i></span></div>' +
         '<button class="btn ghost sm" data-say="' + esc(D.msgs[D.msgs.length - 1].es) + '" style="width:96px">Réécouter</button></div>' +
         '<span class="sub" style="text-align:center;font-size:12px">' + (D.listening ? 'J’écoute… parle maintenant' : 'Appuie sur le micro puis parle') + '</span>';
     }

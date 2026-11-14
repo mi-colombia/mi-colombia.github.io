@@ -1,9 +1,10 @@
 /* Mi Colombia — service worker (hors ligne) */
-var CACHE = 'micolombia-v1.5.0';
+var CACHE = 'micolombia-v2.0.0';
 var FILES = ['./', 'index.html', 'styles.css', 'manifest.webmanifest',
   'data/lexique.js', 'data/verbes.js', 'data/paliers1.js', 'data/paliers2.js', 'data/dialogues.js',
   'js/core.js', 'js/screens.js', 'js/session.js', 'js/main.js',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'];
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png',
+  'images/splash.webp', 'images/banner.webp', 'images/girl.webp', 'images/fort.webp', 'images/fleurs.webp'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));
 });

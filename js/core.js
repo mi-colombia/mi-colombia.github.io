@@ -80,7 +80,7 @@
     name: '', welcomed: false,
     pos: { p: 0, s: 0 },
     done: {}, lastDone: '', streak: { last: '', count: 0 },
-    cards: {}, mastered: {}, custom: [], history: [],
+    cards: {}, mastered: {}, fav: {}, custom: [], history: [],
     settings: { rate: 0.9, voice: '', dir: 'es' }
   };
   MC.load = function () {

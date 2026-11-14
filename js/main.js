@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var MC = window.MC;
-  MC.VERSION = '1.5.0';
+  MC.VERSION = '2.0.0';
   var app = document.getElementById('app');
 
   MC.modal = function (html) {
@@ -95,6 +95,10 @@
         else MC.state.mastered[id] = true;
         MC.save();
         el.classList.toggle('on', MC.isMastered(id)); break;
+      case 'toggle-fav':
+        var fid = el.getAttribute('data-id'); MC.state.fav = MC.state.fav || {};
+        if (MC.state.fav[fid]) delete MC.state.fav[fid]; else MC.state.fav[fid] = true;
+        MC.save(); el.classList.toggle('on', !!MC.state.fav[fid]); break;
       case 'add-word': MC.addWordModal(); break;
       case 'save-word':
         var es = document.getElementById('nw-es').value.trim(), fr = document.getElementById('nw-fr').value.trim();
