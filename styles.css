@@ -1,8 +1,9 @@
 :root{
-  --bg:#FBF7EF; --ink:#1A2230; --ink2:#3A4352; --muted:#5B6472; --line:#EAE3D6; --line2:#F1ECE2; --card:#FFFFFF; --sand:#F4EFE5;
-  --teal:#0B6764; --teal-d:#084C4A; --teal-l:#E3F1EF; --teal-t:#CFE7E5;
-  --sun:#F5B700; --sun-l:#FFF1C2; --sun-t:#7A4B00;
-  --rolo:#1E40AF; --rolo-l:#DCE7FF; --costa:#9A3412; --costa-l:#FFE8D6;
+  --bg:#FFFCF2; --ink:#1A2230; --ink2:#3A4352; --muted:#5B6472; --line:#EAE3D6; --line2:#F1ECE2; --card:#FFFFFF; --sand:#F4EFE5;
+  --teal:#003893; --teal-d:#002A6E; --teal-l:#E4EBF8; --teal-t:#C9D7F3;
+  --sun:#FCD116; --sun-l:#FFF6CC; --sun-t:#6E5200;
+  --red:#CE1126; --red-l:#FDE8EB; --red-t:#A30D1E;
+  --rolo:#5B3E96; --rolo-l:#EDE7F8; --costa:#9A3412; --costa-l:#FFE8D6;
   --bad:#B42318; --bad-l:#FDECEA;
   --display:'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
   --nav-h:72px;
@@ -61,7 +62,7 @@ nav.tabs a.on{color:var(--teal);font-weight:700}
 nav.tabs svg.i{width:24px;height:24px}
 
 /* Home */
-.streak{white-space:nowrap;display:flex;align-items:center;gap:6px;background:var(--sun-l);color:var(--sun-t);padding:8px 12px;border-radius:999px;font-weight:700;font-size:14px}
+.streak{white-space:nowrap;display:flex;align-items:center;gap:6px;background:var(--red-l);color:var(--red-t);padding:8px 12px;border-radius:999px;font-weight:700;font-size:14px}
 .hero{background:var(--teal);color:#fff;border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:16px}
 .hero .label{color:var(--teal-t)}
 .hero h2{font-size:24px;line-height:1.15}
@@ -115,7 +116,7 @@ nav.tabs svg.i{width:24px;height:24px}
 .word-row .es{font-weight:700;font-size:15px}
 .word-row .fr{font-size:13px;color:var(--muted)}
 .list{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.foot{position:sticky;bottom:0;padding:12px 0 calc(8px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 75%,rgba(251,247,239,0))}
+.foot{position:sticky;bottom:0;padding:12px 0 calc(8px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 75%,rgba(255,252,242,0))}
 
 /* Quiz */
 .q-prompt{font-size:26px;font-weight:800;line-height:1.15;font-family:var(--display)}
@@ -146,7 +147,7 @@ nav.tabs svg.i{width:24px;height:24px}
 .answer-panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .sugg{display:flex;align-items:center;gap:8px;background:var(--sand);border-radius:12px;padding:4px 4px 4px 12px}
 .sugg button.txt{flex:1;text-align:left;background:none;border:none;padding:8px 0;font-size:14px;font-weight:500}
-.mic{width:76px;height:76px;border-radius:999px;border:none;background:var(--sun);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(245,183,0,.35)}
+.mic{width:76px;height:76px;border-radius:999px;border:none;background:var(--sun);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(252,209,22,.45)}
 .mic svg.i{width:32px;height:32px}
 .mic.listening{background:var(--bad);color:#fff;animation:pulse 1.2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(180,35,24,.5)}70%{box-shadow:0 0 0 16px rgba(180,35,24,0)}100%{box-shadow:0 0 0 0 rgba(180,35,24,0)}}
@@ -206,3 +207,21 @@ nav.tabs svg.i{width:24px;height:24px}
 .stats>div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
 .stats b{font-size:22px;font-family:var(--display)}
 .stats span{font-size:12px;color:var(--muted)}
+
+/* Thème drapeau colombien */
+.flag-stripe{position:fixed;top:0;left:0;right:0;height:6px;z-index:30;background:linear-gradient(to right,var(--sun) 0 50%,var(--teal) 50% 75%,var(--red) 75% 100%)}
+#app{padding-top:6px}
+.hero{position:relative;overflow:hidden;border-bottom:6px solid var(--red)}
+.hero::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:999px;background:var(--sun);opacity:.16}
+.hero>*{position:relative;z-index:1}
+.palier.cur{border-color:var(--teal)}
+.dot.cur{background:var(--sun)}
+.seance-row.cur .n{background:var(--sun)}
+.cat{border-top-width:5px}
+nav.tabs{border-top:3px solid var(--sun)}
+
+.bar>div{background:var(--teal)}
+.avatar{background:var(--sun)}
+.result{border-bottom:6px solid var(--red)}
+.feedback.good{background:var(--teal-l);color:#0E2350}
+.big-title span.y{color:#B38F00}.big-title span.b{color:var(--teal)}.big-title span.r{color:var(--red)}

@@ -91,7 +91,7 @@
         return '<div class="word-row"><button class="icon-btn sm" data-say="' + esc(w.es) + '" aria-label="Écouter">' + I('speaker', 's') + '</button>' +
           '<div class="grow col" style="gap:2px"><div class="row" style="gap:6px;flex-wrap:wrap"><span class="es">' + esc(w.es) + '</span>' + MC.regPill(w.reg, true) + '</div><span class="fr">' + esc(w.fr) + '</span></div></div>';
       }).join('') + '</div>' +
-      '<div class="card col" style="background:var(--sun-l);border-color:#F3DE9A"><span class="label" style="color:var(--sun-t)">Expression du jour</span>' +
+      '<div class="card col" style="background:var(--sun-l);border-color:#F5E08A"><span class="label" style="color:var(--sun-t)">Expression du jour</span>' +
       '<div class="between"><span class="expr-title">' + esc(e.es) + '</span><button class="icon-btn" data-say="' + esc(e.es) + '" style="background:#fff" aria-label="Écouter">' + I('speaker') + '</button></div>' +
       '<b style="font-size:15px">' + esc(e.fr) + '</b><span style="font-size:14px;color:var(--ink2)">' + esc(e.ctx) + '</span>' +
       '<button class="row" data-say="' + esc(e.ex) + '" style="background:none;border:none;padding:0;text-align:left;gap:8px">' + I('speaker', 's') +

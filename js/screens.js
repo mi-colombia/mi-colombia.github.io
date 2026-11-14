@@ -362,7 +362,7 @@
   /* ---------- Bienvenue ---------- */
   MC.screens.welcome = function () {
     return '<div class="welcome"><img class="logo" src="icons/icon-192.png" alt="">' +
-      '<div class="col" style="gap:8px"><div class="big-title">Mi Colombia</div><p class="intro">L’espagnol de Colombie, celui de Bogotá et de Cartagena, en 15 minutes par jour : une leçon, un quiz, puis un vrai petit dialogue à voix haute.</p></div>' +
+      '<div class="col" style="gap:8px"><div class="big-title">Mi <span class="y">Co</span><span class="b">lom</span><span class="r">bia</span></div><p class="intro">L’espagnol de Colombie, celui de Bogotá et de Cartagena, en 15 minutes par jour : une leçon, un quiz, puis un vrai petit dialogue à voix haute.</p></div>' +
       '<div class="field"><label for="w-name">Comment tu t’appelles ?</label><input id="w-name" placeholder="Ton prénom" value="' + esc(MC.state.name) + '" autocomplete="given-name"></div>' +
       '<button class="btn line" data-say="¡Hola! Bienvenido a Mi Colombia. ¿Qué más, parce?">' + I('speaker', 's') + 'Tester le son</button>' +
       '<button class="btn primary" data-act="welcome-go">¡Vamos!</button>' +
