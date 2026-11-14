@@ -308,7 +308,7 @@
     if (!MC.canListen) html += '<span class="sub" style="font-size:13px">Le micro n’est pas disponible sur ce navigateur : choisis ta réponse (Chrome sur Android pour parler).</span>';
     if (showSugg) {
       html += '<span class="label" style="text-align:center">Écoute, réponds à voix haute ou choisis :</span>' + t[2].map(function (o, i) {
-        return '<div class="sugg"><button class="txt" data-act="pick-opt" data-i="' + i + '">' + esc(MC.withName(o[0])) + '</button>' +
+        return '<div class="sugg"><button class="txt" data-act="pick-opt" data-i="' + i + '">' + esc(MC.withName(o[0])) + (D.help ? '<small>' + esc(MC.withName(o[1])) + '</small>' : '') + '</button>' +
           '<button class="icon-btn sm" data-say="' + esc(o[0]) + '" aria-label="Écouter cette réponse" style="background:#fff">' + I('speaker', 's') + '</button></div>';
       }).join('') + (D.help ? '' : '<span class="sub" style="font-size:12px">Toucher une réponse la choisit sans passer par l’oral.</span>');
     } else {

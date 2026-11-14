@@ -263,3 +263,5 @@ nav.tabs svg.i{width:22px;height:22px}
 .seg3 button small{font-size:11px;font-weight:700;opacity:.8}
 .seg3 button.on{background:linear-gradient(180deg,#FFD84D,#FFBE1A);color:var(--ink);box-shadow:0 3px 8px rgba(255,180,0,.35)}
 .conv-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:22px;padding:12px 14px;box-shadow:var(--shadow);text-decoration:none;color:var(--ink)}
+
+.sugg button.txt small{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-top:2px}

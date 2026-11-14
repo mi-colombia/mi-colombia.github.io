@@ -77,7 +77,7 @@
     if (!MC.canListen) html += '<span class="sub" style="font-size:13px">Le micro n’est pas disponible sur ce navigateur : choisis ta réponse.</span>';
     if (showSugg) {
       html += '<span class="label" style="text-align:center">' + (V.level === 'deb' ? 'Dis une de ces réponses :' : 'Idées de réponse :') + '</span>' + t[2].map(function (o, i) {
-        return '<div class="sugg"><button class="txt" data-act="conv-pick" data-i="' + i + '">' + esc(MC.withName(o[0])) + '</button>' +
+        return '<div class="sugg"><button class="txt" data-act="conv-pick" data-i="' + i + '">' + esc(MC.withName(o[0])) + (V.level === 'deb' ? '<small>' + esc(MC.withName(o[1])) + '</small>' : '') + '</button>' +
           '<button class="icon-btn sm" data-act="conv-say-opt" data-i="' + i + '" aria-label="Écouter cette réponse" style="background:#fff">' + I('speaker', 's') + '</button></div>';
       }).join('');
     } else {
