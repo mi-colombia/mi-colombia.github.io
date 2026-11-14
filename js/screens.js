@@ -4,7 +4,7 @@
   var MC = window.MC, esc = MC.esc, I = MC.icon;
 
   /* ---------- Navigation ---------- */
-  var TABS = [['home', 'Accueil', 'home'], ['parcours', 'Parcours', 'flag'], ['lexique', 'Lexique', 'book'], ['verbes', 'Verbes', 'verbs'], ['trad', 'Traducteur', 'trad']];
+  var TABS = [['home', 'Accueil', 'home'], ['parcours', 'Parcours', 'flag'], ['lexique', 'Lexique', 'book'], ['parler', 'Parler', 'chat'], ['trad', 'Traducteur', 'trad']];
   MC.nav = function (active) {
     return '<nav class="tabs"><div class="in">' + TABS.map(function (t) {
       return '<a href="#' + t[0] + '" class="' + (t[0] === active ? 'on' : '') + '"><span class="ico">' + I(t[2]) + '</span>' + t[1] + '</a>';
@@ -56,7 +56,7 @@
       '<a href="#parcours">Voir tout ›</a></div>' +
       '<div class="between" style="align-items:flex-end"><span class="big">' + pct + ' %</span><span class="streak">' + streak + ' jour' + (streak > 1 ? 's' : '') + ' de suite</span></div>' +
       '<div class="bar"><div style="width:' + Math.max(pct, 3) + '%"></div></div>' +
-      '<span class="sub" style="text-align:center;font-weight:700">Tu objectif : parler avec confiance à Bogotá et Cartagena <span class="emoji">💪</span></span></div>';
+      '<span class="sub" style="text-align:center;font-weight:700">Ton objectif : parler avec confiance à Bogotá et Cartagena <span class="emoji">💪</span></span></div>';
     if (!s) {
       html += '<a class="banner" href="#parcours"><img src="images/banner.webp" alt="Paysage colombien"><div class="cap"><span class="label">Parcours terminé</span>' +
         '<h2>¡Felicitaciones! Tu as fini les 5 paliers.</h2><span class="btn sun">Revoir le parcours</span></div></a>';
@@ -79,7 +79,7 @@
       '<a class="module" href="#verbes"><span class="emoji">✍️</span>Conjugaison<small>-AR, -ER, -IR…</small></a>' +
       '<a class="module" href="#trad"><span class="emoji">🌎</span>Traducteur<small>Parler colombien</small></a>' +
       '<a class="module" href="#parcours"><span class="emoji">🏆</span>Parcours<small>' + doneAll + ' / ' + MC.SEANCES.length + ' séances</small></a>' +
-      '<a class="module" href="#lexique/expr"><span class="emoji">🗣️</span>Expressions<small>Argot et dichos</small></a></div>';
+      '<a class="module" href="#parler"><span class="emoji">🗣️</span>Conversations<small>' + MC.CONVS.length + ' scènes du quotidien</small></a></div>';
     html += '<div class="between"><h2 class="section-title">Mes badges</h2></div><div class="badges">' + MC.badges().map(function (b) {
       return '<div class="badge ' + (b[2] ? '' : 'locked') + '"><span class="medal emoji">' + b[0] + '</span>' + esc(b[1]) + '</div>';
     }).join('') + '</div>';
@@ -222,13 +222,14 @@
 
   /* ---------- Verbes ---------- */
   MC.screens.verbes = function () {
+    var backLink = '<a class="icon-btn plain" href="#home" aria-label="Retour" style="margin-left:-10px">' + I('back') + '</a>';
     var v = MC.view;
     v.vg = v.vg || 'ar'; v.vi = v.vi || 0; v.vt = v.vt || 'pres';
     var group = MC.VERB_GROUPS.filter(function (g) { return g.id === v.vg; })[0];
     var verb = group.verbs[v.vi] || group.verbs[0];
     var tense = MC.TENSES.filter(function (t) { return t.id === v.vt; })[0];
     var forms = MC.conjugate(verb, v.vt);
-    return '<div class="screen"><div class="between"><h1 class="h1">Conjugaison</h1><span class="pill teal">Sans vosotros</span></div>' +
+    return '<div class="screen"><div class="between"><div class="row" style="gap:4px">' + backLink + '<h1 class="h1">Conjugaison</h1></div><span class="pill teal">Sans vosotros</span></div>' +
       '<div class="chips">' + MC.VERB_GROUPS.map(function (g) {
         return '<button class="chip ' + (g.id === v.vg ? 'on' : '') + '" data-act="vg" data-v="' + g.id + '">' + g.label + '</button>';
       }).join('') + '</div>' +

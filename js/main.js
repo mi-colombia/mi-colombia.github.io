@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var MC = window.MC;
-  MC.VERSION = '2.0.0';
+  MC.VERSION = '2.1.0';
   var app = document.getElementById('app');
 
   MC.modal = function (html) {
@@ -39,6 +39,11 @@
 
   var lastHash = location.hash;
   window.addEventListener('hashchange', function () {
+    var leavingConv = lastHash.indexOf('#conv/') === 0 && location.hash.indexOf('#conv/') !== 0;
+    if (leavingConv && MC.conv && MC.conv.phase !== 'end' && MC.conv.turn > 0) {
+      if (!confirm('Quitter la conversation ?')) { history.replaceState(null, '', lastHash); return; }
+    }
+    if (leavingConv) MC.conv = null;
     var leavingSession = lastHash.indexOf('#seance') === 0 && location.hash.indexOf('#seance') !== 0;
     if (leavingSession && MC.sess && MC.sess.steps[MC.sess.stepI] !== 'end') {
       if (!confirm('Quitter la séance ? Ce que tu as fait dans cette séance ne sera pas enregistré.')) {
@@ -99,6 +104,18 @@
         var fid = el.getAttribute('data-id'); MC.state.fav = MC.state.fav || {};
         if (MC.state.fav[fid]) delete MC.state.fav[fid]; else MC.state.fav[fid] = true;
         MC.save(); el.classList.toggle('on', !!MC.state.fav[fid]); break;
+      case 'conv-level': MC.state.settings.convLevel = el.getAttribute('data-v'); MC.save(); MC.route(); break;
+      case 'conv-len': MC.state.settings.convLen = el.getAttribute('data-v'); MC.save(); MC.route(); break;
+      case 'conv-quit': location.hash = 'parler'; break;
+      case 'conv-tr': MC.conv.shownTr[+el.getAttribute('data-k')] = true; MC.conv.helps++; MC.route(); break;
+      case 'conv-say': MC.speak(MC.conv.msgs[+el.getAttribute('data-k')].es); break;
+      case 'conv-say-opt': MC.speak(MC.conv.turns[MC.conv.turn][2][+el.getAttribute('data-i')][0]); break;
+      case 'conv-say-last': var lm = MC.conv.msgs.filter(function (m) { return m.who === 'npc'; }).pop(); if (lm) MC.speak(lm.es); break;
+      case 'conv-help': MC.conv.showHelp = true; MC.conv.helps++; MC.route(); break;
+      case 'conv-pick': MC.convPick(+el.getAttribute('data-i'), null); break;
+      case 'conv-mic': MC.convMic(); break;
+      case 'conv-finish': MC.convFinish(); break;
+      case 'conv-again': var cid = MC.conv.c.id; MC.conv = null; MC.startConv(cid); MC.route(); break;
       case 'add-word': MC.addWordModal(); break;
       case 'save-word':
         var es = document.getElementById('nw-es').value.trim(), fr = document.getElementById('nw-fr').value.trim();
