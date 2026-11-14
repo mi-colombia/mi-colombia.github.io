@@ -1,5 +1,5 @@
 /* Mi Colombia — service worker (hors ligne) */
-var CACHE = 'micolombia-v1.4.0';
+var CACHE = 'micolombia-v1.5.0';
 var FILES = ['./', 'index.html', 'styles.css', 'manifest.webmanifest',
   'data/lexique.js', 'data/verbes.js', 'data/paliers1.js', 'data/paliers2.js', 'data/dialogues.js',
   'js/core.js', 'js/screens.js', 'js/session.js', 'js/main.js',
@@ -26,7 +26,7 @@ self.addEventListener('fetch', function (e) {
   }
   if (url.origin !== location.origin) return;
   // réseau d'abord (pour recevoir les mises à jour), cache si hors ligne
-  e.respondWith(fetch(e.request).then(function (r) {
+  e.respondWith(fetch(e.request, { cache: 'no-cache' }).then(function (r) {
     if (r && r.ok) { var copy = r.clone(); caches.open(CACHE).then(function (c) { c.put(e.request, copy); }); }
     return r;
   }).catch(function () {

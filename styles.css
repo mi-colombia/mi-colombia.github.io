@@ -311,3 +311,17 @@ body.th-a .hero .parts{margin-top:6px}
 body.th-a .hero .parts>div{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
 body.th-a .hero .parts span{color:#DCE6FF}
 body.th-a .hero .btn.sun{background:#FCD116;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+
+/* v1.5 — demandes : bande drapeau proportionnée, carte jaune, bouton tricolore, plus de bleu/vert */
+html,body{background:var(--bg)}
+.flag-stripe{height:8px;background:linear-gradient(to right,#FCD116 0 50%,#003893 50% 75%,#CE1126 75% 100%)}
+body.th-a .hero{background:#FCD116;border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+body.th-a .hero::after{display:none}
+body.th-a .hero .label{color:#5E4500}
+body.th-a .hero h2{color:var(--ink);min-height:0}
+body.th-a .hero .tag{background:#fff;color:var(--ink)}
+body.th-a .hero .parts{margin-top:0}
+body.th-a .hero .parts>div{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+body.th-a .hero .parts span{color:#4F4A35}
+body.th-a .hero .btn.sun{background:linear-gradient(to bottom,#FCD116 0 56%,#003893 56% 78%,#CE1126 78% 100%);color:var(--ink);border:3px solid var(--ink);box-shadow:none;min-height:64px;align-items:flex-start;padding-top:9px;font-size:17px;font-weight:800}
+body.th-a .result{border-bottom:6px solid #FCD116}
