@@ -369,9 +369,12 @@
       alts.forEach(function (a) {
         t[2].forEach(function (o, i) { var sc = MC.similarity(a, o[0]); if (sc > bestScore) { bestScore = sc; best = i; } });
       });
-      if (best >= 0 && bestScore >= 0.6) MC.dlgPick(best, bestScore, alts[0]);
-      else if (MC.freeAccept(alts[0], t[0], t[2])) MC.dlgPick(-1, 1, alts[0]);
-      else {
+      if (best >= 0 && bestScore >= 0.6) { MC.dlgPick(best, bestScore, alts[0]); return; }
+      {
+        var freeAlt = alts.filter(function (x) { return MC.freeAccept(x, t[0], t[2], 'deb'); })[0];
+        if (freeAlt) { MC.dlgPick(-1, 1, freeAlt); return; }
+      }
+      {
         D.fails++;
         D.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (D.fails >= 2 ? 'Voici les réponses possibles.' : 'Réessaie !');
         MC.route();

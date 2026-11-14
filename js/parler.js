@@ -157,9 +157,12 @@
           if (sc > bestScore) { bestScore = sc; best = i; }
         });
       });
-      if (best >= 0 && bestScore >= threshold(V.level)) MC.convPick(best, bestScore, alts[0]);
-      else if (MC.freeAccept(alts[0], t[0], t[2])) MC.convPick(-1, 1, alts[0]);
-      else {
+      if (best >= 0 && bestScore >= threshold(V.level)) { MC.convPick(best, bestScore, alts[0]); return; }
+      {
+        var freeAlt = alts.filter(function (x) { return MC.freeAccept(x, t[0], t[2], V.level); })[0];
+        if (freeAlt) { MC.convPick(-1, 1, freeAlt); return; }
+      }
+      {
         V.fails++;
         V.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (V.fails >= 2 ? 'Voici des idées de réponse.' : 'Réessaie !');
         if (V.fails >= 2) V.helps++;

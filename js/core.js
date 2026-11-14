@@ -311,12 +311,26 @@
      de la question ou des réponses possibles (même racine). */
   var STOPW = ' el la los las un una unos unas de del al a en y o que por para con es me te se le lo mi tu su yo usted ustedes muy pues si no ya hay como mas pero '.split(' ');
   function contentWords(t) { return MC.norm(MC.withName(t)).split(' ').filter(function (w) { return w && w.length >= 3 && STOPW.indexOf(w) < 0; }); }
-  MC.freeAccept = function (heard, npcText, opts) {
+  var NUM = /\b(\d+|un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|once|doce|quince|veinte|treinta|cuarenta|cincuenta|cien|ciento|mil|millon|millones|solo|sola|todos|todas|pocos|muchos|varios|media|medio|mitad|docena|par|somos|seremos)\b/;
+  var TIME = /\b(\d+|hoy|manana|ayer|ahora|ahorita|luego|despues|antes|temprano|tarde|noche|semana|semanas|mes|meses|ano|anos|dia|dias|hora|horas|minutos|lunes|martes|miercoles|jueves|viernes|sabado|domingo|las|la una|nunca|siempre|pronto|ya)\b/;
+  var YESNO = /\b(si|no|claro|bueno|listo|dale|obvio|perfecto|nunca|todavia|tal vez|de pronto|de una|hagale|por supuesto|nada|ninguno|ninguna|exacto|ojala)\b/;
+  var PLACE = /\b(en|a|al|para|de|aqui|alla|ahi|cerca|lejos|casa|hotel|centro|calle|carrera|barrio|playa)\b/;
+  MC.freeAccept = function (heard, npcText, opts, level) {
+    var n = MC.norm(heard), words = n.split(' ').filter(Boolean);
+    if (!words.length) return false;
     var h = contentWords(heard);
-    if (MC.norm(heard).split(' ').length < 2 || !h.length) return false;
+    // 1. un mot important en commun avec la question ou les réponses prévues
     var pool = contentWords(npcText);
     opts.forEach(function (o) { pool = pool.concat(contentWords(o[0])); });
-    return h.some(function (w) { return pool.some(function (p) { return p.slice(0, 4) === w.slice(0, 4); }); });
+    if (h.some(function (w) { return pool.some(function (p) { return p.slice(0, 4) === w.slice(0, 4); }); })) return true;
+    // 2. le type de réponse attendu par la question
+    var q = MC.norm(npcText);
+    if (/cuant/.test(q) && NUM.test(n)) return true;
+    if (/(cuando|que hora|a que hora|hace cuanto|desde cuando|cuanto tiempo)/.test(q) && TIME.test(n)) return true;
+    if (/donde/.test(q) && PLACE.test(n) && words.length >= 2) return true;
+    if (!/(que|quien|cual|cuant|como|donde|cuando|por que)/.test(q) && YESNO.test(n)) return true;
+    // 3. une vraie phrase en intermédiaire / avancé (2 mots), en débutant (3 mots)
+    return words.length >= (level === 'inter' || level === 'av' ? 2 : 3);
   };
   MC.ACKS = [['Listo.', 'D\u2019accord.'], ['Ah, bueno.', 'Ah, bon.'], ['Perfecto.', 'Parfait.'], ['Ya veo.', 'Je vois.'], ['Muy bien.', 'Très bien.'], ['Claro.', 'Bien sûr.']];
   MC.cap = function (t) { t = String(t || '').trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
