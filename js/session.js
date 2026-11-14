@@ -326,13 +326,19 @@
     }
     return html + '</div></div>';
   }
-  MC.dlgPick = function (i, score) {
-    var D = MC.sess.dlg, t = D.d.turns[D.turn], o = t[2][i];
+  MC.dlgPick = function (i, score, heardText) {
+    var D = MC.sess.dlg, t = D.d.turns[D.turn], o = i >= 0 ? t[2][i] : null;
     var oral = score != null;
-    D.msgs.push({ who: 'me', es: o[0], fr: o[1], info: oral ? 'Compris · ' + Math.round(score * 100) + ' %' : 'Choisie sans l’oral' });
-    if (oral) D.oral++; else D.typed++;
     var toSay = [];
-    if (o[2]) { D.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
+    if (o) {
+      D.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? 'Compris ✓' : 'Choisie sans l’oral' });
+      if (o[2]) { D.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
+    } else {
+      D.msgs.push({ who: 'me', es: MC.cap(heardText), fr: '', info: 'Réponse libre ✓' });
+      var ack = MC.ACKS[Math.floor(Math.random() * MC.ACKS.length)];
+      D.msgs.push({ who: 'npc', es: ack[0], fr: ack[1] }); toSay.push(ack[0]);
+    }
+    if (oral) D.oral++; else D.typed++;
     D.turn++; D.fails = 0; D.heard = ''; D.showHelp = D.help;
     if (D.turn < D.d.turns.length) {
       var n = D.d.turns[D.turn]; D.msgs.push({ who: 'npc', es: n[0], fr: n[1] }); toSay.push(n[0]);
@@ -363,7 +369,8 @@
       alts.forEach(function (a) {
         t[2].forEach(function (o, i) { var sc = MC.similarity(a, o[0]); if (sc > bestScore) { bestScore = sc; best = i; } });
       });
-      if (best >= 0 && bestScore >= 0.6) MC.dlgPick(best, bestScore);
+      if (best >= 0 && bestScore >= 0.6) MC.dlgPick(best, bestScore, alts[0]);
+      else if (MC.freeAccept(alts[0], t[0], t[2])) MC.dlgPick(-1, 1, alts[0]);
       else {
         D.fails++;
         D.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (D.fails >= 2 ? 'Voici les réponses possibles.' : 'Réessaie !');

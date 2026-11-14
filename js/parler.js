@@ -113,13 +113,19 @@
   }
   function threshold(level) { return level === 'deb' ? 0.6 : level === 'inter' ? 0.5 : 0.45; }
 
-  MC.convPick = function (i, score) {
-    var V = MC.conv, t = V.turns[V.turn], o = t[2][i];
+  MC.convPick = function (i, score, heardText) {
+    var V = MC.conv, t = V.turns[V.turn], o = i >= 0 ? t[2][i] : null;
     var oral = score != null;
-    V.msgs.push({ who: 'me', es: o[0], fr: o[1], info: oral ? 'Compris · ' + Math.round(score * 100) + ' %' : 'Choisie sans l’oral' });
-    if (oral) V.oral++; else V.typed++;
     var toSay = [];
-    if (o[2]) { V.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
+    if (o) {
+      V.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? 'Compris ✓' : 'Choisie sans l’oral' });
+      if (o[2]) { V.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
+    } else {
+      V.msgs.push({ who: 'me', es: MC.cap(heardText), fr: '', info: 'Réponse libre ✓' });
+      var ack = MC.ACKS[Math.floor(Math.random() * MC.ACKS.length)];
+      V.msgs.push({ who: 'npc', es: ack[0], fr: ack[1] }); toSay.push(ack[0]);
+    }
+    if (oral) V.oral++; else V.typed++;
     V.turn++; V.fails = 0; V.heard = ''; V.showHelp = V.level === 'deb';
     if (V.turn < V.turns.length) {
       var n = V.turns[V.turn]; V.msgs.push({ who: 'npc', es: n[0], fr: n[1] }); toSay.push(n[0]);
@@ -151,7 +157,8 @@
           if (sc > bestScore) { bestScore = sc; best = i; }
         });
       });
-      if (best >= 0 && bestScore >= threshold(V.level)) MC.convPick(best, bestScore);
+      if (best >= 0 && bestScore >= threshold(V.level)) MC.convPick(best, bestScore, alts[0]);
+      else if (MC.freeAccept(alts[0], t[0], t[2])) MC.convPick(-1, 1, alts[0]);
       else {
         V.fails++;
         V.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (V.fails >= 2 ? 'Voici des idées de réponse.' : 'Réessaie !');

@@ -307,6 +307,19 @@
     // s finales avalées (costeño) ou mal reconnues
     return a.replace(/s$/, '') === b.replace(/s$/, '');
   }
+  /* Réponse libre acceptée : la phrase entendue reprend au moins un mot important
+     de la question ou des réponses possibles (même racine). */
+  var STOPW = ' el la los las un una unos unas de del al a en y o que por para con es me te se le lo mi tu su yo usted ustedes muy pues si no ya hay como mas pero '.split(' ');
+  function contentWords(t) { return MC.norm(MC.withName(t)).split(' ').filter(function (w) { return w && w.length >= 3 && STOPW.indexOf(w) < 0; }); }
+  MC.freeAccept = function (heard, npcText, opts) {
+    var h = contentWords(heard);
+    if (MC.norm(heard).split(' ').length < 2 || !h.length) return false;
+    var pool = contentWords(npcText);
+    opts.forEach(function (o) { pool = pool.concat(contentWords(o[0])); });
+    return h.some(function (w) { return pool.some(function (p) { return p.slice(0, 4) === w.slice(0, 4); }); });
+  };
+  MC.ACKS = [['Listo.', 'D\u2019accord.'], ['Ah, bueno.', 'Ah, bon.'], ['Perfecto.', 'Parfait.'], ['Ya veo.', 'Je vois.'], ['Muy bien.', 'Très bien.'], ['Claro.', 'Bien sûr.']];
+  MC.cap = function (t) { t = String(t || '').trim(); return t.charAt(0).toUpperCase() + t.slice(1); };
   MC.similarity = function (heard, expected) {
     var name = MC.norm((MC.state && MC.state.name) || 'Corentin');
     var h = MC.norm(heard).split(' ').filter(Boolean);
