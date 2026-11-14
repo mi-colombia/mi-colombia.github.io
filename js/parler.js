@@ -5,8 +5,8 @@
 
   var LEVELS = [
     { id: 'deb', label: 'Débutant', info: 'Réponses proposées et traductions affichées, voix plus lente.' },
-    { id: 'inter', label: 'Intermédiaire', info: 'Tu réponds avec tes mots ; l’aide et la traduction sont sur demande.' },
-    { id: 'av', label: 'Avancé', info: 'Sans traduction ni aide (sauf si tu bloques), voix normale, réponse libre.' }
+    { id: 'inter', label: 'Intermédiaire', info: 'La réponse attendue est écrite en français : à toi de la dire en espagnol. Bouton Aide pour voir l’espagnol.' },
+    { id: 'av', label: 'Avancé', info: 'Réponse attendue en français seulement, pas de traduction du personnage, voix normale, contrôle plus exigeant.' }
   ];
   var LENS = [{ id: 'court', label: 'Courte', sub: '~10 échanges' }, { id: 'long', label: 'Longue', sub: 'toute la scène' }];
   function lvl() { return MC.state.settings.convLevel || 'deb'; }
@@ -76,12 +76,14 @@
     html += '<div class="foot"><div class="answer-panel">';
     if (!MC.canListen) html += '<span class="sub" style="font-size:13px">Le micro n’est pas disponible sur ce navigateur : choisis ta réponse.</span>';
     if (showSugg) {
-      html += '<span class="label" style="text-align:center">' + (V.level === 'deb' ? 'Dis une de ces réponses :' : 'Idées de réponse :') + '</span>' + t[2].map(function (o, i) {
+      html += '<span class="label" style="text-align:center">' + (V.level === 'deb' ? 'Dis une de ces réponses :' : 'La réponse en espagnol :') + '</span>' + t[2].map(function (o, i) {
         return '<div class="sugg"><button class="txt" data-act="conv-pick" data-i="' + i + '">' + esc(MC.withName(o[0])) + (V.level === 'deb' ? '<small>' + esc(MC.withName(o[1])) + '</small>' : '') + '</button>' +
           '<button class="icon-btn sm" data-act="conv-say-opt" data-i="' + i + '" aria-label="Écouter cette réponse" style="background:#fff">' + I('speaker', 's') + '</button></div>';
       }).join('');
     } else {
-      html += '<span class="label" style="text-align:center">' + (V.level === 'av' ? 'À toi, réponds librement' : 'À toi, réponds avec tes mots') + '</span>';
+      html += '<span class="label" style="text-align:center">Dis en espagnol une de ces réponses :</span>' + t[2].map(function (o) {
+        return '<div class="fr-prompt">' + esc(MC.withName(o[1])) + '</div>';
+      }).join('');
     }
     if (V.heard) html += '<div class="heard">' + esc(V.heard) + '</div>';
     if (MC.canListen) {
@@ -111,14 +113,14 @@
     });
     return Math.max(hit / e.length, MC.similarity(heard, expected));
   }
-  function threshold(level) { return level === 'deb' ? 0.6 : level === 'inter' ? 0.5 : 0.45; }
+  function threshold(level) { return level === 'deb' ? 0.6 : level === 'inter' ? 0.55 : 0.65; }
 
   MC.convPick = function (i, score, heardText) {
     var V = MC.conv, t = V.turns[V.turn], o = i >= 0 ? t[2][i] : null;
     var oral = score != null;
     var toSay = [];
     if (o) {
-      V.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? 'Compris ✓' : 'Choisie sans l’oral' });
+      V.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? (MC.norm(heardText) === MC.norm(MC.withName(o[0])) ? 'Parfait ✓' : 'Compris ✓ · version attendue : ' + MC.withName(o[0])) : 'Choisie sans l’oral' });
       if (o[2]) { V.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
     } else {
       V.msgs.push({ who: 'me', es: MC.cap(heardText), fr: '', info: 'Réponse libre ✓' });
@@ -159,12 +161,8 @@
       });
       if (best >= 0 && bestScore >= threshold(V.level)) { MC.convPick(best, bestScore, alts[0]); return; }
       {
-        var freeAlt = alts.filter(function (x) { return MC.freeAccept(x, t[0], t[2], V.level); })[0];
-        if (freeAlt) { MC.convPick(-1, 1, freeAlt); return; }
-      }
-      {
         V.fails++;
-        V.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (V.fails >= 2 ? 'Voici des idées de réponse.' : 'Réessaie !');
+        V.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (V.fails >= 2 ? 'Voici les réponses en espagnol.' : 'Ce n’est pas encore ça, réessaie !');
         if (V.fails >= 2) V.helps++;
         MC.route();
       }

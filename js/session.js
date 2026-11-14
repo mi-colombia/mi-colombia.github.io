@@ -312,7 +312,9 @@
           '<button class="icon-btn sm" data-say="' + esc(o[0]) + '" aria-label="Écouter cette réponse" style="background:#fff">' + I('speaker', 's') + '</button></div>';
       }).join('') + (D.help ? '' : '<span class="sub" style="font-size:12px">Toucher une réponse la choisit sans passer par l’oral.</span>');
     } else {
-      html += '<span class="label">À toi · réponds à voix haute</span>';
+      html += '<span class="label" style="text-align:center">Dis en espagnol une de ces réponses :</span>' + t[2].map(function (o) {
+        return '<div class="fr-prompt">' + esc(MC.withName(o[1])) + '</div>';
+      }).join('');
     }
     if (D.heard) html += '<div class="heard">' + esc(D.heard) + '</div>';
     if (MC.canListen) {
@@ -331,7 +333,7 @@
     var oral = score != null;
     var toSay = [];
     if (o) {
-      D.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? 'Compris ✓' : 'Choisie sans l’oral' });
+      D.msgs.push({ who: 'me', es: oral && heardText ? MC.cap(heardText) : o[0], fr: o[1], info: oral ? (MC.norm(heardText) === MC.norm(MC.withName(o[0])) ? 'Parfait ✓' : 'Compris ✓ · version attendue : ' + MC.withName(o[0])) : 'Choisie sans l’oral' });
       if (o[2]) { D.msgs.push({ who: 'npc', es: o[2], fr: o[3] }); toSay.push(o[2]); }
     } else {
       D.msgs.push({ who: 'me', es: MC.cap(heardText), fr: '', info: 'Réponse libre ✓' });
@@ -370,10 +372,6 @@
         t[2].forEach(function (o, i) { var sc = MC.similarity(a, o[0]); if (sc > bestScore) { bestScore = sc; best = i; } });
       });
       if (best >= 0 && bestScore >= 0.6) { MC.dlgPick(best, bestScore, alts[0]); return; }
-      {
-        var freeAlt = alts.filter(function (x) { return MC.freeAccept(x, t[0], t[2], 'deb'); })[0];
-        if (freeAlt) { MC.dlgPick(-1, 1, freeAlt); return; }
-      }
       {
         D.fails++;
         D.heard = 'J’ai compris : « ' + alts[0] + ' ». ' + (D.fails >= 2 ? 'Voici les réponses possibles.' : 'Réessaie !');

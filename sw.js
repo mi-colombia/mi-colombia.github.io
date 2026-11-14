@@ -1,5 +1,5 @@
 /* Mi Colombia — service worker (hors ligne) */
-var CACHE = 'micolombia-v2.4.0';
+var CACHE = 'micolombia-v2.5.0';
 var FILES = ['./', 'index.html', 'styles.css', 'manifest.webmanifest',
   'data/lexique.js', 'data/verbes.js', 'data/paliers1.js', 'data/paliers2.js', 'data/dialogues.js', 'data/conversations1.js', 'data/conversations2.js',
   'js/core.js', 'js/screens.js', 'js/session.js', 'js/parler.js', 'js/main.js',
