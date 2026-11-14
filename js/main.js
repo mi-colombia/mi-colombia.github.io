@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var MC = window.MC;
-  MC.VERSION = '1.3.0';
+  MC.VERSION = '1.4.0';
   var app = document.getElementById('app');
 
   MC.modal = function (html) {

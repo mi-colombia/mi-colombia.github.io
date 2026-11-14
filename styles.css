@@ -294,3 +294,20 @@ body.th-c .hero::after{display:none}
 body.th-c .streak{background:var(--teal);color:#fff}
 body.th-a .foot{background:linear-gradient(to top,var(--bg) 75%,rgba(255,228,94,0))}
 body.th-a .bar{background:rgba(20,24,58,.12)}
+
+/* Bonne réponse et coches en jaune (plus de bleu) */
+body.th-a .opt.good{background:#FFF0A0;border-color:#C9A200}
+body.th-a .feedback.good{background:#FFF0A0;color:#3D2E00}
+body.th-a .check.on,body.th-a .dot.done,body.th-a .seance-row.done .n{background:#FCD116;border-color:#14183A;color:#14183A}
+body.th-a .pill.teal{background:#FFF0A0;color:#5E4500}
+
+/* Carte du jour : fond drapeau colombien */
+body.th-a .hero{background:linear-gradient(to bottom,#FCD116 0 50%,#003893 50% 75%,#CE1126 75% 100%);border:3px solid var(--ink);border-bottom:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);gap:14px}
+body.th-a .hero::after{display:none}
+body.th-a .hero .label{color:#5E4500}
+body.th-a .hero h2{color:var(--ink);min-height:56px}
+body.th-a .hero .tag{background:#fff;color:var(--ink)}
+body.th-a .hero .parts{margin-top:6px}
+body.th-a .hero .parts>div{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35)}
+body.th-a .hero .parts span{color:#DCE6FF}
+body.th-a .hero .btn.sun{background:#FCD116;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
