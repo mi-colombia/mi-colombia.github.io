@@ -210,8 +210,8 @@ nav.tabs svg.i{width:24px;height:24px}
 .stats span{font-size:12px;color:var(--muted)}
 
 /* Thème drapeau colombien */
-.flag-stripe{position:fixed;top:0;left:0;right:0;height:6px;z-index:30;background:linear-gradient(to right,var(--sun) 0 50%,var(--teal) 50% 75%,var(--red) 75% 100%)}
-#app{padding-top:6px}
+.flag-stripe{position:fixed;top:0;left:0;right:0;height:8px;z-index:30;background:linear-gradient(to bottom,#FCD116 0 50%,#003893 50% 75%,#CE1126 75% 100%)}
+#app{padding-top:8px}
 .hero{position:relative;overflow:hidden;border-bottom:6px solid var(--red)}
 .hero::after{content:'';position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:999px;background:var(--sun);opacity:.16}
 .hero>*{position:relative;z-index:1}
@@ -244,3 +244,53 @@ nav.tabs{border-top:3px solid var(--sun)}
 .tense-tabs{background:#F7E8B5}
 .chip.verb.on{background:var(--sun-l);color:var(--sun-t);border:2px solid var(--sun)}
 .streak{background:var(--sun);color:var(--ink)}
+
+/* ===== Propositions de thèmes ===== */
+/* A — Soleil : jaune dominant, rouge pour l'action */
+body.th-a{--bg:#FFE45E;--card:#FFFFFF;--line:#E9C21C;--line2:#F6E39A;--sand:#FFF1A8;--teal:#E00A2B;--teal-d:#B0061F;--teal-l:#FFE0E5;--teal-t:#FFD6DB;--sun:#FCD116;--sun-l:#FFF3B0;--sun-t:#5E4500;--ink:#14183A;--muted:#4F4A35;--ink2:#2E2C24}
+body.th-a .hero{background:#FFF;color:var(--ink);border:3px solid var(--ink);border-bottom:8px solid var(--teal);box-shadow:6px 6px 0 var(--ink)}
+body.th-a .hero h2{color:var(--ink)}
+body.th-a .hero .label,body.th-a .hero .parts span{color:#6E5200}
+body.th-a .hero .parts>div,body.th-a .hero .tag{background:var(--sun);color:var(--ink)}
+body.th-a .hero .btn.sun{background:var(--teal);color:#fff}
+body.th-a .hero::after{background:var(--sun);opacity:1;width:90px;height:90px;right:-24px;top:-24px}
+body.th-a .card,body.th-a .list,body.th-a .cat,body.th-a .palier,body.th-a .opt,body.th-a .flash,body.th-a .answer-panel,body.th-a .stats>div{border:2px solid var(--ink)}
+body.th-a .btn.primary,body.th-a .hero .btn.sun{box-shadow:0 4px 0 var(--teal-d)}
+body.th-a .streak{background:var(--teal);color:#fff}
+body.th-a .opt.good{background:#DCE6FF;border-color:#003893}
+body.th-a .check.on,body.th-a .dot.done,body.th-a .seance-row.done .n{background:#003893;border-color:#003893}
+body.th-a .hero{border-bottom-color:var(--teal)}
+body.th-a .note.i{background:#FFF7CC}
+body.th-a .bubble.npc{border:2px solid var(--ink)}
+body.th-a .sub,body.th-a .fr{color:#4F4A35}
+body.th-a nav.tabs{background:#FFFFFF;border-top:3px solid var(--ink)}
+body.th-a nav.tabs a{color:#4F4A35}body.th-a nav.tabs a.on{color:var(--teal)}
+/* B — Nuit : fond sombre, jaune et rouge lumineux */
+body.th-b{--bg:#141826;--card:#1F2436;--line:#2E3550;--line2:#272D44;--sand:#272D44;--ink:#F4F1E8;--ink2:#D6D2C6;--muted:#A9A79F;--teal:#FCD116;--teal-d:#E3B900;--teal-l:#3A3720;--teal-t:#6E5C00;--sun:#E8263F;--sun-l:#3D1F27;--sun-t:#FF8A98;--rolo-l:#2E2650;--rolo:#C3B1F2;--costa-l:#3D2A1E;--costa:#FFB48A}
+body.th-b .hero{background:linear-gradient(160deg,#2A2F45,#1F2436);color:var(--ink);border:1px solid var(--line);border-bottom:6px solid var(--sun)}
+body.th-b .hero .label,body.th-b .hero .parts span{color:var(--muted)}
+body.th-b .hero h2{color:var(--teal)}
+body.th-b .hero .btn.sun{background:var(--teal);color:#141826}
+body.th-b .btn.primary{background:var(--teal);color:#141826}
+body.th-b nav.tabs{background:#1A1F31;border-top:3px solid var(--teal)}
+body.th-b .opt,body.th-b .chip,body.th-b .tile,body.th-b .search,body.th-b .check{background:var(--card);color:var(--ink)}
+body.th-b .streak{background:var(--sun);color:#fff}
+body.th-b .opt.good{background:#1E2A4F;border-color:#5C86E6}
+body.th-b .feedback.bad{background:#3D1F27;color:#FFC2CA}
+body.th-b .note.i,body.th-b .note.b,body.th-b .note.c{color:var(--ink2)}
+body.th-b .note.i{background:var(--sand)}body.th-b .note.b{background:var(--rolo-l)}body.th-b .note.c{background:var(--costa-l)}
+body.th-b .bubble.me{background:var(--sun);color:#fff}body.th-b .bubble.me .tr{color:#FFD6DB}
+body.th-b .mic{background:var(--teal)}
+body.th-b .pill.teal{background:#3A3720;color:var(--teal)}
+body.th-b .bar{background:var(--line)}
+body.th-b .foot{background:linear-gradient(to top,var(--bg) 75%,rgba(20,24,38,0))}
+body.th-b .icon-btn{background:#3A3720;color:var(--teal)}
+/* C — Cartagena : tons chauds et doux (corail, moutarde) */
+body.th-c{--bg:#FDF3E3;--line:#EED9B8;--line2:#F5E6CC;--sand:#F7E4C3;--teal:#E0463B;--teal-d:#B8352C;--teal-l:#FBE3DE;--teal-t:#FFD9D3;--sun:#F2B705;--sun-l:#FCEFC4;--sun-t:#6B4E00;--ink:#2B2320}
+body.th-c .hero{background:linear-gradient(150deg,#F2B705 0%,#F08A24 45%,#E0463B 100%);border-bottom:6px solid var(--blue)}
+body.th-c .hero .btn.sun{background:#fff;color:var(--teal-d)}
+body.th-c .hero .label,body.th-c .hero .parts span{color:#FFF1DA}
+body.th-c .hero::after{display:none}
+body.th-c .streak{background:var(--teal);color:#fff}
+body.th-a .foot{background:linear-gradient(to top,var(--bg) 75%,rgba(255,228,94,0))}
+body.th-a .bar{background:rgba(20,24,58,.12)}
